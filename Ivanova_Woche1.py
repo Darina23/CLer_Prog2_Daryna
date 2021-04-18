@@ -32,7 +32,7 @@ class WordBasedFeatures():
         Counts stopwords in a sentence.
 
     outputter(n_of_words: list, average: list, n_stopwords: list)
-         Collectt result of number_of_words, average_length and
+        Collectt result of number_of_words, average_length and
         number_of_stopwords functions and creates an appropriate output.
         An auxiliary method.
 
@@ -41,6 +41,8 @@ class WordBasedFeatures():
     def tokenize_text(self, text: list) -> list:
         """
         Tokenize a text.
+
+        An auxiliary method.
 
         Parameters
         ----------
@@ -133,7 +135,7 @@ class WordBasedFeatures():
         """
         Make an appropriate output.
 
-        Auxiliary method.
+        An auxiliary method.
 
         Parameters
         ----------
