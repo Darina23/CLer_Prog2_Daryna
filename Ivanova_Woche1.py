@@ -6,6 +6,7 @@ Author: Daryna Ivanova.
 
 Purpose: Implementation of Word-based features: number of words, average word
 length (characters) and number of stopwords.
+
 """
 
 from nltk.tokenize import RegexpTokenizer
