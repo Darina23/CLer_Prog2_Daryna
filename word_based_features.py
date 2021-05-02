@@ -22,7 +22,7 @@ class WordBasedFeatures(AllFeatures):
     ----------
     text
         Tokenizes a given text. An inherited attribute from an abstract class
-        Features().
+        AllFeatures().
 
     Methods
     -------
@@ -38,7 +38,7 @@ class WordBasedFeatures(AllFeatures):
     outputter(n_of_words: list, average: list, n_stopwords: list)
         Collects results of number_of_words, average_length and
         number_of_stopwords functions and creates an appropriate output.
-        An inherited method from an abstract class Features().
+        An inherited method from an abstract class AllFeatures().
 
     """
 
