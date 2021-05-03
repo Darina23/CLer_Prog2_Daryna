@@ -10,11 +10,10 @@ length (characters) and number of stopwords.
 """
 
 from nltk.corpus import stopwords
-from nltk.tokenize import RegexpTokenizer
-from abstract_feature_class import AllFeatures
+from abc_features import Features
 
 
-class WordBasedFeatures(AllFeatures):
+class WordBasedFeatures(Features):
     """
     A class to implement some word-based features.
 
@@ -43,11 +42,7 @@ class WordBasedFeatures(AllFeatures):
     """
 
     def __init__(self, text: list):
-        tokenizer = RegexpTokenizer(r"\w+")
-        tokenized_text = []
-        for string in text:
-            tokenized_text.append(tokenizer.tokenize(string))
-        self.text = tokenized_text
+        super().__init__(text)
 
     def number_of_words(self) -> list:
         """
@@ -144,23 +139,3 @@ class WordBasedFeatures(AllFeatures):
         out = [list(el) for el in res]
 
         return out
-
-
-def main():
-    # toy text
-    text = ["hello, world!", "My name is Alice.",
-            "Humpty Dumpty had a great fall"]
-    # tokenize
-    tokenized_text = WordBasedFeatures(text)
-    # compute number of words in a sentence
-    n_words = tokenized_text.number_of_words()
-    # compute average length of words in a sentence
-    average = tokenized_text.average_length()
-    # number of stopwords in a sentence
-    n_stopwords = tokenized_text.number_of_stopwords()
-    # print result
-    print(tokenized_text.outputter(n_words, average, n_stopwords))
-
-
-if __name__ == "__main__":
-    main()
