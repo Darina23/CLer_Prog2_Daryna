@@ -25,7 +25,6 @@ class Features(ABC):
     -------
     outputter
         Creates an appropriate output.
-
     """
 
     def __init__(self, text: list):
@@ -44,6 +43,5 @@ class Features(ABC):
         Returns
         -------
         None.
-
         """
         pass
