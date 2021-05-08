@@ -5,7 +5,8 @@ Matr.-Nr.: 767488
 """
 
 from nltk.tokenize import RegexpTokenizer
-from AbstractFeatures import Features
+from abc_features import Features
+
 
 class stChFeats(Features):
 	"""
@@ -21,7 +22,7 @@ class stChFeats(Features):
 		Count the number of uppercase, lowercase and numeric characters
 		and return an appropriate output.
 		An inherited method from an abstract class Features().
-    """
+	"""
 	def __init__(self, text: list):
 		tokenizer = RegexpTokenizer(r"\w+")
 		tokenized_text = []
@@ -31,7 +32,7 @@ class stChFeats(Features):
 			tokenized_text.append(tokenizer.tokenize(string))
 			self.nr_char.append(len(string))
 		self.text = tokenized_text
-		
+
 	def outputter(self) -> list:
 		"""
 		Create an appropriate output.
@@ -74,6 +75,7 @@ class stChFeats(Features):
 		
 		return out
 
+
 if __name__ == "__main__":
 	# demo text
 	gid0 = "1 In the myriadic year of our Lord"
@@ -83,7 +85,7 @@ if __name__ == "__main__":
 	gid2 += "magazines, and she escaped from the House of the Ninth."
 	gidN = stChFeats([gid0,gid1,gid2])
 	fl = gidN.outputter()
-	
+
 	print("This script contains the class stChFeatures which is used to"
 			" store the number of upper-, lowercase and numeric "
 			"characters of strings from a list in a matrix.\nThe index "

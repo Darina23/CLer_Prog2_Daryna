@@ -9,8 +9,8 @@ length (characters) and number of stopwords.
 
 """
 
+from text_classification.abc_features import Features
 from nltk.corpus import stopwords
-from abc_features import Features
 
 
 class WordBasedFeatures(Features):
@@ -67,7 +67,7 @@ class WordBasedFeatures(Features):
 
     def average_length(self) -> list:
         """
-        Compute average lenth of words for a sentence.
+        Compute average length of words for a sentence.
 
         Parameters
         ----------
@@ -103,10 +103,11 @@ class WordBasedFeatures(Features):
         """
         stop_words = stopwords.words("english")
         n_stopwords = []
-        for string in self.text:
+        for sent in self.text:
+            sent = [w.lower() for w in sent]
             counter = 0
             for stop_w in stop_words:
-                if stop_w in string:
+                if stop_w in sent:
                     counter += 1
             n_stopwords.append(counter)
 

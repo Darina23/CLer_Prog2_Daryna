@@ -8,7 +8,8 @@ Purpose: code execution
 
 """
 
-from word_based_features import WordBasedFeatures
+
+from text_classification.word_based_features import WordBasedFeatures
 
 
 def main():
