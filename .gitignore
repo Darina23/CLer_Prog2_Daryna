@@ -2,3 +2,5 @@
 .md
 .txt
 .DS_Store
+__pycache__/
+datasets/
