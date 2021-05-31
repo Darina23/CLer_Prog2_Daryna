@@ -8,8 +8,8 @@ Purpose: an abstract class implementation.
 
 """
 
+
 from abc import ABC, abstractmethod
-from nltk.tokenize import RegexpTokenizer
 
 
 class Features(ABC):
@@ -18,21 +18,17 @@ class Features(ABC):
 
     Attributes
     ----------
-    text
-        Tokenizes a given text.
+    df:
+        Tokenizes a given text in a dataframe.
 
     Methods
     -------
-    outputter
+    outputter:
         Creates an appropriate output.
     """
 
-    def __init__(self, text: list):
-        tokenizer = RegexpTokenizer(r"\w+")
-        tokenized_text = []
-        for string in text:
-            tokenized_text.append(tokenizer.tokenize(string))
-        self.text = tokenized_text
+    def __init__(self, df):
+        self.text = df
         super().__init__()
 
     @abstractmethod

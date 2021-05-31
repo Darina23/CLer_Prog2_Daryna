@@ -9,23 +9,23 @@ Purpose: code execution
 """
 
 
-from text_classification.word_based_features import WordBasedFeatures
+from Classifier import Classifier
+from text_classification.WordBasedFeatures import WordBasedFeatures
 
 
 def main():
-    # toy text
-    text = ["hello, world!", "My name is Alice.",
-            "Humpty Dumpty had a great fall"]
-    # tokenize
-    tokenized_text = WordBasedFeatures(text)
+    # split data
+    training, validation, test = Classifier().split_data()
+    print(type(training))
+    text = Classifier().prepare_data_for_statistics("train")
     # compute number of words in a sentence
-    n_words = tokenized_text.number_of_words()
+    WordBasedFeatures(text).number_of_words()
     # compute average length of words in a sentence
-    average = tokenized_text.average_length()
+    WordBasedFeatures(text).average_length()
     # number of stopwords in a sentence
-    n_stopwords = tokenized_text.number_of_stopwords()
+    WordBasedFeatures(text).number_of_stopwords()
     # print result
-    print(tokenized_text.outputter(n_words, average, n_stopwords))
+    WordBasedFeatures(text).outputter()
 
 
 if __name__ == "__main__":
