@@ -9,23 +9,31 @@ Purpose: code execution
 """
 
 
-from Classifier import Classifier
+from DataPreprocessing import DataPreprocessing
 from text_classification.WordBasedFeatures import WordBasedFeatures
-
+from text_classification.SyntacticFeatures import SyntacticFeatures
 
 def main():
     # split data
-    training, validation, test = Classifier().split_data()
+    training, validation, test = DataPreprocessing().split_data()
     print(type(training))
-    text = Classifier().prepare_data_for_statistics("train")
-    # compute number of words in a sentence
-    WordBasedFeatures(text).number_of_words()
-    # compute average length of words in a sentence
-    WordBasedFeatures(text).average_length()
-    # number of stopwords in a sentence
-    WordBasedFeatures(text).number_of_stopwords()
-    # print result
-    WordBasedFeatures(text).outputter()
+    df = DataPreprocessing().prepare_data_for_statistics("train")
+    # compute word-based features
+    # WordBasedFeatures(df).number_of_words()
+    # # compute average length of words in a sentence
+    # WordBasedFeatures(df).average_length()
+    # # number of stopwords in a sentence
+    # WordBasedFeatures(df).number_of_stopwords()
+    # WordBasedFeatures(df).number_of_emojis()
+    # # print result
+    # WordBasedFeatures(df).outputter()
+    # SyntacticFeatures(df).number_of_function_words()
+    # SyntacticFeatures(df).outputter()
+    WordBasedFeatures(df).features()
+    SyntacticFeatures(df).features()
+    WordBasedFeatures(df).outputter()
+        # SyntacticFeatures(df).number_of_function_words()
+    SyntacticFeatures(df).outputter()
 
 
 if __name__ == "__main__":
