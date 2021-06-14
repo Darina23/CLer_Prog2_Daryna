@@ -4,80 +4,40 @@
 """
 Author: Daryna Ivanova.
 
-Purpose: data preprocessing.
-
+Purpose: Implementation of syntactic features: number of function words.
 """
 
-import os
+
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import numpy as np
+from text_classification.AbcFeatures import Features
 
 
 class Classifier():
+    """A class to train and predict models."""
 
-    def __init__(self):
-        """
-        Read data as a csv file and converts it into data frame.
-
-        Attributes
-        ----------
-        data:
-            Dataset in csv format.
-        df:
-            Dataframe.
-
-        """
-        path_to_data = os.getcwd() + \
-            "/datasets/test_TaskA/SemEval2018-T3_input_test_taskA.txt"
-        data = pd.read_csv(path_to_data, sep='\t',
-                           engine="python", error_bad_lines=False)
-        df = pd.DataFrame(data)
-        self.data = data
+    def __init__(self, df):
         self.df = df
-        # print(df.describe(include=[np.object]))
+        
+        means = self.df[['Label', 'Words', 'Stop words', 'Function words',
+                         'Emoticons', 'Word average length']].groupby(
+                             ["Label"]).mean()
 
-    def split_data(self) -> tuple:
-        """
-        Split data into training, validation and test sets and save them in
-        separate csv files.
+        self.zero_mean = means.loc[0,:]
+        self.one_mean = means.loc[1,:]
+        
+        print(self.zero_mean)
 
-        Returns
-        -------
-        tuple:
-            (train, validation, test).
+    def predict(self, dataset):
+        """Predict a class."""
+        data = dataset[['Words', 'Stop words', 'Function words', 'Emoticons',
+                        'Word average length']].values
+        distances_to_zero = np.sum(np.abs(data - self.zero_mean.values.T),
+                                   axis=1)
+        distances_to_one = np.sum(np.abs(data - self.one_mean.values.T),
+                                  axis=1)
 
-        """
-        train1, test = train_test_split(self.df, test_size=.2,
-                                        random_state=42)
-        train, validation = train_test_split(train1, test_size=.2,
-                                             random_state=42)
-        # save train, validation and test datasets as csv files
-        train.to_csv(r"datasets/training_data.csv", index=False)
-        validation.to_csv(r"datasets/validation_data.csv", index=False)
-        test.to_csv(r"datasets/test_data.csv", index=False)
+        data_zero = distances_to_zero > distances_to_one
+        print(pd.DataFrame(data_zero, columns=["Class"]))
 
-        return train, validation, test
-
-    def prepare_data_for_statistics(self, dataset: str):
-        """
-        Access an appropriate dataset to extract statistics (features) from.
-
-        Parameters
-        ----------
-        dataset : str
-            User's input.
-
-        Returns
-        -------
-        df : TYPE
-            DESCRIPTION.
-
-        """
-        df = self.split_data()
-        if dataset == "train":
-            df = df[0]
-        elif dataset == "validation":
-            df = df[1]
-        else:
-            df = df[2]
-        return df
+        return self.df.assign(Class=data_zero)

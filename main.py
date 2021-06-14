@@ -9,23 +9,30 @@ Purpose: code execution
 """
 
 
-from Classifier import Classifier
+from DataPreprocessing import DataPreprocessing
 from text_classification.WordBasedFeatures import WordBasedFeatures
+from text_classification.SyntacticFeatures import SyntacticFeatures
+from Classifier import Classifier
 
 
 def main():
     # split data
-    training, validation, test = Classifier().split_data()
+    training, validation, test = DataPreprocessing().split_data()
     print(type(training))
-    text = Classifier().prepare_data_for_statistics("train")
-    # compute number of words in a sentence
-    WordBasedFeatures(text).number_of_words()
-    # compute average length of words in a sentence
-    WordBasedFeatures(text).average_length()
-    # number of stopwords in a sentence
-    WordBasedFeatures(text).number_of_stopwords()
-    # print result
-    WordBasedFeatures(text).outputter()
+    df = DataPreprocessing().prepare_data_for_statistics("train")
+    # apply word-based features
+    WordBasedFeatures(df).features()
+    # apply syntactic features
+    SyntacticFeatures(df).features()
+    SyntacticFeatures(df).outputter()
+    # train model
+    model = Classifier(df)
+
+
+    print(model.predict(df))
+    
+
+
 
 
 if __name__ == "__main__":

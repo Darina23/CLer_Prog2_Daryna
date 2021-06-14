@@ -28,16 +28,10 @@ class Features(ABC):
     """
 
     def __init__(self, df):
-        self.text = df
+        self.df = df
         super().__init__()
 
     @abstractmethod
-    def outputter(self):
-        """
-        Create an appropriate output.
-
-        Returns
-        -------
-        None.
-        """
+    def features(self):
+        """Implement features."""
         pass
