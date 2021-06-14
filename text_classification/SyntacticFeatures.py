@@ -31,7 +31,7 @@ class SyntacticFeatures(Features):
     Methods
     -------
     features
-        Computes number of emoticons for each sentence of a text.
+        Computes number of function words for each sentence of a text.
         A static method.
 
     """
@@ -41,10 +41,15 @@ class SyntacticFeatures(Features):
 
     def features(self):
         """Implement syntactic features."""
-        # count emoticons
+        # count function words
         func_w_tags = ["CC", "DT", "IN", "POS", "TO", "WDT", "WP", "WP$",
                        "WRB", "PDT", "RP", "PRP", "PRP$"]
         pos_tags = self.df["Tweet text"].str.split().apply(
             lambda x: len([i[1] for i in pos_tag(x) if i[1] in func_w_tags]))
 
         self.df["Function words"] = pos_tags
+
+    def outputter(self):
+    #     """Make an appropriate output."""
+    #     #print(tabulate(self.df, headers='keys', tablefmt='psql'))
+         print(self.df.head(30))
